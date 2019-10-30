@@ -22,20 +22,18 @@ function plugin(file) {
 
   var response = {
 
-     processFile : false,
-     preset : '',
-     container : '.mp4',
-     handBrakeMode : false,
-     FFmpegMode : false,
-     reQueueAfter : false,
-     infoLog : '',
+    processFile: false,
+    preset: '',
+    container: '.mp4',
+    handBrakeMode: false,
+    FFmpegMode: false,
+    reQueueAfter: false,
+    infoLog: '',
 
   }
 
-  response.container = '.'+file.container
+  response.container = '.' + file.container
   response.FFmpegMode = true
-
-
 
 
   if (file.fileMedium !== "video") {
@@ -43,37 +41,30 @@ function plugin(file) {
 
     console.log("File is not video")
 
-    response.infoLog += " File is not video"
+    response.infoLog += "☒File is not video \n"
     response.processFile = false;
 
     return response
 
-  } else { 
+  } else {
 
-     var jsonString = JSON.stringify(file)
-
-
-   
+   // var jsonString = JSON.stringify(file)
 
 
-     ///
+    if (file.meta.Title != undefined) {
 
-
- ///
-     if(file.meta.Title != undefined ){
-
-      response.infoLog += " File has title metadata"
+      response.infoLog += "☒File has title metadata \n"
       response.preset = ',-map_metadata -1 -c:v copy -c:a copy'
       response.reQueueAfter = true;
       response.processFile = true;
       return response
-     }else{
-      response.infoLog += " File has no title metadata"
-     }
+    } else {
+      response.infoLog += "☑File has no title metadata \n"
+    }
 
-    
-     response.infoLog += " File meets conditions!"
-     return response
+
+    response.infoLog += "☑File meets conditions! \n"
+    return response
 
   }
 }
